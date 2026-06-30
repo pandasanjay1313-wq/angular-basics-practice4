@@ -1,0 +1,15 @@
+<h2>Todo List</h2>
+<div align="right">
+<input
+  type="text"
+  [(ngModel)]="task"
+  placeholder="Enter Task">
+<button (click)="add()" >
+  Add Task
+</button><!---add-->
+</div>
+ @for(task of todoService.tasks;track task ; let i = $index){
+  <p>{{i+1}}.{{ task }}</p>
+}
+
+  
