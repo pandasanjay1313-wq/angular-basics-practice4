@@ -1,0 +1,19 @@
+<h2>Todo List</h2>
+<div>
+<input
+  type="text"
+  [(ngModel)]="task"
+  placeholder="Enter Task">
+<button (click)="add()" >
+  Add Task
+</button><!---add-->
+<button (click)="openCount()">Count</button>
+
+</div>
+
+<!-- <a routerLink="counts">Todo Count</a> -->
+
+@for(task of tasks;track task ; let i = $index){
+  <p>{{i+1}}.{{ task }}</p>
+}
+<router-outlet></router-outlet>
