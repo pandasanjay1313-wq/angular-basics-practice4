@@ -24,11 +24,14 @@ export class Lists {
   }
 openCount(){
 
-  this.router.navigate(['counts'],{
-    relativeTo: this.route,
-    queryParams:{total:5, task: 'angular'}
+
+  this.router.navigate(['counts',5],{ 
+    relativeTo: this.route
+    // queryParams:{total:5, task: 'angular'},
+    // //state params
+    // state:{total:5, task: 'angular'}
   });
-}
+} 
 
 
 
