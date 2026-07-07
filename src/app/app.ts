@@ -14,14 +14,13 @@ import { CommonModule } from '@angular/common';
 })
 export class App {
 ///Reactive form
-  age = new FormControl<number | null>(null, [Validators.required, Validators.min(18), Validators.max(45)])
-
-userDetails = new FormGroup({
-    name: new FormControl(null,[Validators.required,Validators.minLength(3),Validators.maxLength(45)]),
-    email: new FormControl(null,[Validators.required,Validators.email]),
-})
+  age = new FormControl(null, [Validators.required, Validators.min(18), Validators.max(45)]);
+  name= new FormControl(null,[Validators.required,Validators.minLength(3),Validators.maxLength(45)]);
+    email= new FormControl(null,[Validators.required,Validators.email]);
 
 submit(){
+    this.name.setValue(this.name.value);
+  this.email.setValue(this.email.value);
   this.age.setValue(this.age.value);
 }
 

@@ -35,29 +35,29 @@
 
 </form> -->
 <hr>  <h1>reactive form</h1>
-<section [formGroup]="userDetails">
-  <div>
+
+
+<form >
+
+<div>
     <label for="name">Name:</label>
-    <input name="name" type="text" formControlName="name">
-    @if(userDetails.errors && userDetails.dirty){
-    @if(userDetails.errors['required']){
-      <p>Age is required</p>
+    <input name="name" type="text" [formControl]="name">
+    @if(name.errors && name.dirty){
+    @if(name.errors['required']){
+      <p>name is required</p>
     }
-    @if(userDetails.errors['minLength']){
+    @if(name.errors['minLength']){
       <p>min letter 3</p>
     }
-    @if(userDetails.errors['maxLenth']){
+    @if(name.errors['maxLenth']){
       <p>max letter 45</p>
     }
   }
     <br><br>
     <label for="email">Email:</label>
     <input name="email" type="email" fromControlEmail="email"><br><br>
-  </div>
-</section>
-<form>
 
-<div>
+
   <label for="age">Age :</label>
   <input name="age" type="number" [formControl]="age">
   
@@ -85,18 +85,6 @@
   <p>enable: {{age.enabled }}</p>
   <p>disabled: {{age.disabled }}</p>
   <p>errors: {{age.errors | json }}</p>
-
-<hr>
-  <h2>Form Group</h2>
-  <p>value: {{ userDetails.value }}</p>
-  <p>valid: {{ userDetails.valid }}</p>
-  <p>dirty: {{ userDetails.dirty }}</p>
-  <p>touched: {{ userDetails.touched }}</p>
-  <p>untouched: {{ userDetails.untouched }}</p>
-  <p>status: {{ userDetails.status }}</p>
-  <p>enable: {{userDetails.enabled }}</p>
-  <p>disabled: {{userDetails.disabled }}</p>
-  <p>errors: {{userDetails.errors | json }}</p>
 
 </form>
 
