@@ -7,7 +7,15 @@
 <a routerLink="details">Details</a>
 <a routerLink="start">Start</a>
 
-</div>
+<br>
+<hr>
+<a [routerLink]="['product',101]" [queryParams]="{brand:'Redmi'}">Product</a>
 
+<!-- <button (click)="openFrag()">go to details</button> -->
+<a routerLink="fragmt" fragment="details">Fragment</a>
+<button (click)="openSkip()">openSkip</button>
+
+<button (click)="openReplace()">Open Replace</button>
+</div>
 <hr>
 <router-outlet></router-outlet>

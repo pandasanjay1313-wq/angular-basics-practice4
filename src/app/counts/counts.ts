@@ -18,11 +18,7 @@ id = 0;
   ngOnInit(){
     this.route.queryParams.subscribe(params=>{
       this.id =params['id'];
-      // this.total = params['total'];
-      // this.task = params['task'];
-      // //state params
-      // this.total = history.state.total;
-      // this.total = history.state.task;
+
 
 
     });

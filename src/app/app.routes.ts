@@ -10,10 +10,15 @@ import { Details } from './details/details';
 import { Info } from './details/info/info';
 import { Start } from './start/start';
 import { Show } from './start/show/show';
+import { Product } from './product/product';
+import { Frag } from './frag/frag';
+import { Skip } from './skip/skip';
+import { Replace } from './replace/replace';
 
 
 
 export const routes: Routes = [
+    
 
     {path: '', component:Dashboard,
         children:[
@@ -31,15 +36,26 @@ export const routes: Routes = [
                  },
 
                  {path: 'details', component:Details,
-                    children:[{path:'infos', component: Info }]
+                    children:[{path:'info', component: Info }]
                 },
 
                 {path:'start', component:Start,
                     children:[{path:'show',component:Show}]
-                }
+                },
+
+                {path:'product/:id', component:Product},
+
+                {path:'fragmt', component:Frag},
+
+                {path:'skips', component:Skip},
+
+                {path:'replace', component:Replace}
 
 
         ]
+       
+    
+    
         
     }
 ];

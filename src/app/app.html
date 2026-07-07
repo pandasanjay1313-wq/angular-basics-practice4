@@ -1,3 +1,203 @@
+<!-- <br>
+ <h1>Template driven form</h1>
+<form #age="ngForm">
+
+  <div>
+    <label>Name:</label>
+    <input type="text" name="name" ngModel required>
+  </div>
+
+  <br>
+
+  <div>
+    <label>Email:</label>
+    <input type="email" name="email" ngModel required email>
+  </div>
+
+  <br>
+
+  <button type="submit">Submit</button>-
+  <button type="button" (click)="age.reset()">Reset</button>-
+  <button type="button" (click)="age.resetForm()">Reset Form</button>
+
+  <hr>
+
+  <h3>Form Properties</h3>
+  <p>value: {{ age.value | json }}</p>
+  <p>valid: {{ age.valid }}</p>
+  <p>invalid: {{ age.invalid }}</p>
+  <p>touched: {{ age.touched }}</p>
+  <p>untouched: {{ age.untouched }}</p>
+  <p>dirty: {{ age.dirty }}</p>
+  <p>pristine: {{ age.pristine }}</p>
+  <p>submitted: {{ age.submitted }}</p>
+  <p>controls: {{ age.controls | json }}</p>
+
+</form> -->
+<hr>  <h1>reactive form</h1>
+<section [formGroup]="userDetails">
+  <div>
+    <label for="name">Name:</label>
+    <input name="name" type="text" formControlName="name">
+    @if(userDetails.errors && userDetails.dirty){
+    @if(userDetails.errors['required']){
+      <p>Age is required</p>
+    }
+    @if(userDetails.errors['minLength']){
+      <p>min letter 3</p>
+    }
+    @if(userDetails.errors['maxLenth']){
+      <p>max letter 45</p>
+    }
+  }
+    <br><br>
+    <label for="email">Email:</label>
+    <input name="email" type="email" fromControlEmail="email"><br><br>
+  </div>
+</section>
+<form>
+
+<div>
+  <label for="age">Age :</label>
+  <input name="age" type="number" [formControl]="age">
+  
+    @if(age.errors && age.dirty){
+    @if(age.errors['required']){
+      <p>Age is required</p>
+    }
+    @if(age.errors['min']){
+      <p>min age is 18</p>
+    }
+    @if(age.errors['max']){
+      <p>max age is 45</p>
+    }
+  }
+</div>
+<button (click)="submit()">Submit</button>
+<hr>
+<h2>Form Control</h2>
+  <p>value: {{ age.value }}</p>
+  <p>valid: {{ age.valid }}</p>
+  <p>dirty: {{ age.dirty }}</p>
+  <p>touched: {{ age.touched }}</p>
+  <p>untouched: {{ age.untouched }}</p>
+  <p>status: {{ age.status }}</p>
+  <p>enable: {{age.enabled }}</p>
+  <p>disabled: {{age.disabled }}</p>
+  <p>errors: {{age.errors | json }}</p>
+
+<hr>
+  <h2>Form Group</h2>
+  <p>value: {{ userDetails.value }}</p>
+  <p>valid: {{ userDetails.valid }}</p>
+  <p>dirty: {{ userDetails.dirty }}</p>
+  <p>touched: {{ userDetails.touched }}</p>
+  <p>untouched: {{ userDetails.untouched }}</p>
+  <p>status: {{ userDetails.status }}</p>
+  <p>enable: {{userDetails.enabled }}</p>
+  <p>disabled: {{userDetails.disabled }}</p>
+  <p>errors: {{userDetails.errors | json }}</p>
+
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+<!-- <form #age="ngForm">
+
+  <input
+    type="text"  minlength="3" placeholder="Enter name" required >
+
+  @if (nameRef.touched && nameRef.invalid) {
+    <p>Name is required</p>
+  }
+
+  <br><br>
+
+  <input
+    type="text" name="phone" placeholder="Enter phone" required >
+
+  @if (phoneRef.touched && phoneRef.invalid) {
+    <p>Phone is required</p>
+  }
+
+  <br><br>
+
+  <input
+    type="email" name="email" placeholder="Enter email" required>
+
+  
+  @if (emailRef.touched && emailRef.errors?.['required']) {
+    <p>Email is required</p>
+  }
+
+  @if (emailRef.touched && emailRef.errors?.['email']) {
+    <p>Enter valid email</p>
+  }
+
+  <br><br>
+
+  <select name="city" required>
+    <option value="">Select city</option>
+    <option value="Chennai">Chennai</option>
+    <option value="Madurai">Madurai</option>
+    <option value="Kumbakonam">Kumbakonam</option>
+  </select>
+
+  @if (cityRef.touched && cityRef.invalid) {
+    <p>City is required</p>
+  }
+
+  <br><br>
+
+  <button type="submit" [disabled]="age.invalid">
+    Submit
+  </button>
+
+</form>
+
+<br>
+
+<p>Name: {{ submittedUser.name }}</p>
+<p>Phone: {{ submittedUser.phone }}</p>
+<p>Email: {{ submittedUser.email }}</p>
+<p>City: {{ city }}</p>
+
+ <p>value:{{age.value}}</p>
+<p>valid:{{age.valid}}</p>
+<p>invalid:{{age.invalid}}</p>
+<p>touched:{{age.touched}}</p>
+<p>untouched:{{age.untouched}}</p>
+<p>dirty:{{age.dirty}}</p>
+<p>pristine:{{age.pristine}}</p>
+<p>submitted:{{age.submitted}}</p>
+<p>controls:{{age.controls}}</p> -->
+
+
+
 <app-inputs></app-inputs>
 <!-- <app-dashboard></app-dashboard> -->
   <!-- <div class="menu">
@@ -7,4 +207,4 @@
 </div> -->
 
 
-<router-outlet></router-outlet>
+<router-outlet></router-outlet> 
