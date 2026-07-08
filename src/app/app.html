@@ -1,10 +1,11 @@
-<!-- <br>
+ <!---<br>
  <h1>Template driven form</h1>
 <form #age="ngForm">
 
   <div>
     <label>Name:</label>
-    <input type="text" name="name" ngModel required>
+    <input type="text" name="name" #firstname="ngModel"  ngModel required>
+    <p>{{firstname.value }}</p>
   </div>
 
   <br>
@@ -32,157 +33,116 @@
   <p>pristine: {{ age.pristine }}</p>
   <p>submitted: {{ age.submitted }}</p>
   <p>controls: {{ age.controls | json }}</p>
+</form>------>
 
-</form> -->
+
 <hr>  <h1>reactive form</h1>
 
+<form [formGroup]="userForm" (ngSubmit)="submit()">
 
-<form >
+<button (click)="patchData()">Patch Data</button>-
 
+<button (click)="setData()">Set Data</button><br><br>
 <div>
     <label for="name">Name:</label>
-    <input name="name" type="text" [formControl]="name">
-    @if(name.errors && name.dirty){
-    @if(name.errors['required']){
+    <input name="name" type="text" formControlName="name">
+    @if(userForm.controls.name.errors && userForm.controls.name.dirty){
+    @if(userForm.controls.name.errors['required']){
       <p>name is required</p>
     }
-    @if(name.errors['minLength']){
-      <p>min letter 3</p>
-    }
-    @if(name.errors['maxLenth']){
-      <p>max letter 45</p>
-    }
+  } 
+    @if(userForm.controls.name.errors?.['noAdmin'] && userForm.controls.name.touched){
+    <p>admin is not allowed</p>
   }
-    <br><br>
-    <label for="email">Email:</label>
-    <input name="email" type="email" fromControlEmail="email"><br><br>
+  <br><br>
+  <label for="phone">Phone:</label>
+  <input name="phone" type="number" formControlName="phone">
+  @if(userForm.controls.phone.errors?.['required'] && userForm.controls.phone.touched){
+    <p>Phone number is required</p>
+  }
 
+  @if(userForm.controls.phone.errors?.['indianPhone'] && userForm.controls.phone.touched){
+    <p>Enter a valid Indian phone number</p>
+  }
 
-  <label for="age">Age :</label>
-  <input name="age" type="number" [formControl]="age">
+  <br><br>
+ <label for="age">Age :</label>
+  <input name="age" type="number" formControlName="age">
   
-    @if(age.errors && age.dirty){
-    @if(age.errors['required']){
+    @if(userForm.controls.age.errors && userForm.controls.age.dirty){
+    @if(userForm.controls.age.errors['required']){
       <p>Age is required</p>
     }
-    @if(age.errors['min']){
+    @if(userForm.controls.age.errors['min']){
       <p>min age is 18</p>
     }
-    @if(age.errors['max']){
+    @if(userForm.controls.age.errors['max']){
       <p>max age is 45</p>
     }
   }
-</div>
-<button (click)="submit()">Submit</button>
-<hr>
-<h2>Form Control</h2>
-  <p>value: {{ age.value }}</p>
-  <p>valid: {{ age.valid }}</p>
-  <p>dirty: {{ age.dirty }}</p>
-  <p>touched: {{ age.touched }}</p>
-  <p>untouched: {{ age.untouched }}</p>
-  <p>status: {{ age.status }}</p>
-  <p>enable: {{age.enabled }}</p>
-  <p>disabled: {{age.disabled }}</p>
-  <p>errors: {{age.errors | json }}</p>
 
-</form>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<hr>
-
-<!-- <form #age="ngForm">
-
-  <input
-    type="text"  minlength="3" placeholder="Enter name" required >
-
-  @if (nameRef.touched && nameRef.invalid) {
-    <p>Name is required</p>
-  }
-
-  <br><br>
-
-  <input
-    type="text" name="phone" placeholder="Enter phone" required >
-
-  @if (phoneRef.touched && phoneRef.invalid) {
-    <p>Phone is required</p>
-  }
-
-  <br><br>
-
-  <input
-    type="email" name="email" placeholder="Enter email" required>
-
-  
-  @if (emailRef.touched && emailRef.errors?.['required']) {
+    <br><br>
+    <label for="email">Email:</label>
+    <input name="email" type="email" formControlName="email"><br><br>
+    @if(userForm.controls.email.errors?.['required'] && userForm.controls.email.touched){
     <p>Email is required</p>
   }
 
-  @if (emailRef.touched && emailRef.errors?.['email']) {
+  @if(userForm.controls.email.errors?.['email'] && userForm.controls.email.touched){
     <p>Enter valid email</p>
   }
 
-  <br><br>
-
-  <select name="city" required>
-    <option value="">Select city</option>
-    <option value="Chennai">Chennai</option>
-    <option value="Madurai">Madurai</option>
-    <option value="Kumbakonam">Kumbakonam</option>
-  </select>
-
-  @if (cityRef.touched && cityRef.invalid) {
-    <p>City is required</p>
+  @if(userForm.controls.email.errors?.['gmailOnly'] && userForm.controls.email.touched){
+    <p>Only Gmail is allowed</p>
   }
+  <div formGroupName="passwordGroup">
+  <label for="password">Password:</label>
+  <input name="password" type="password" formControlName="password"><br><br>
+    @if(userForm.controls.passwordGroup.controls.password.touched){
+      @if(userForm.controls.passwordGroup.controls.password.errors?.['required']){
+        <p>Password is required</p>
+      }
 
-  <br><br>
+      @if(userForm.controls.passwordGroup.controls.password.errors?.['specialChar']){
+        <p>Password must contain a special character</p>
+      }
+    }
 
-  <button type="submit" [disabled]="age.invalid">
-    Submit
-  </button>
+  <label for="cpnfirmPassword">Confirm Password:</label>
+  <input name="confirmpassword" type="password" formControlName="confirmPassword">
+
+  @if(userForm.controls.passwordGroup.controls.confirmPassword.touched){
+      @if(userForm.controls.passwordGroup.controls.confirmPassword.errors?.['required']){
+        <p>Confirm Password is required</p>
+      }
+    }
+
+    @if(
+      userForm.controls.passwordGroup.errors?.['passwordMismatch'] &&
+      userForm.controls.passwordGroup.controls.confirmPassword.touched){
+      <p>Password and Confirm Password must match</p>
+    }
+  </div>
+</div><br>
+<button (click)="submit()">Submit</button>
+
+<hr>
+<h3>Validations</h3>
+  <p>value: {{ userForm.value | json }}</p>
+  <p>valid: {{ userForm.valid }}</p>
+  <p>dirty: {{ userForm.dirty }}</p>
+  <p>touched: {{ userForm.touched }}</p>
+  <p>untouched: {{ userForm.untouched }}</p>
+  <p>status: {{ userForm.status }}</p>
+  <p>enable: {{userForm.enabled }}</p>
+  <p>disabled: {{userForm.disabled }}</p>
+  <p>errors: {{userForm.errors | json }}</p>
 
 </form>
 
-<br>
 
-<p>Name: {{ submittedUser.name }}</p>
-<p>Phone: {{ submittedUser.phone }}</p>
-<p>Email: {{ submittedUser.email }}</p>
-<p>City: {{ city }}</p>
+<hr>
 
- <p>value:{{age.value}}</p>
-<p>valid:{{age.valid}}</p>
-<p>invalid:{{age.invalid}}</p>
-<p>touched:{{age.touched}}</p>
-<p>untouched:{{age.untouched}}</p>
-<p>dirty:{{age.dirty}}</p>
-<p>pristine:{{age.pristine}}</p>
-<p>submitted:{{age.submitted}}</p>
-<p>controls:{{age.controls}}</p> -->
 
 
 
