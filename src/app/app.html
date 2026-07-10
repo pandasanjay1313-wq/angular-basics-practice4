@@ -1,4 +1,119 @@
- <!---<br>
+<h2>Get product List</h2>
+<!-- <p>{{errorMessage}}</p> -->
+<!--Show Forms  -->
+<h2>Product List</h2>
+
+<button (click)="openForm()">Add Product</button>
+
+@if (showForm) {
+  <h3>Add Product</h3>
+
+  <div>
+    <label>ID:</label>
+    <input type="number" #pid>
+  </div>
+
+  <div>
+    <label>Title:</label>
+    <input type="text" #ptitle>
+  </div>
+
+  <div>
+    <label>Price:</label>
+    <input type="number" #pprice>
+  </div>
+
+  <div>
+    <label>Description:</label>
+    <input type="text" #pdescription>
+  </div>
+
+  <div>
+    <label>Category:</label>
+    <input type="text" #pcategory>
+  </div>
+
+  <button
+    (click)="saveProduct(pid.value, ptitle.value, pprice.value, pdescription.value, pcategory.value)">
+    Save
+  </button>
+}
+
+<hr>
+
+<table border="1">
+  <tr>
+    <th>ID</th>
+    <th>Title</th>
+    <th>Price</th>
+    <th>Description</th>
+    <th>Category</th>
+  </tr>
+
+  @for (product of products; track product.id) {
+    <tr>
+      <td>{{ product.id }}</td>
+      <td>{{ product.title }}</td>
+      <td>{{ product.price }}</td>
+      <td>{{ product.description }}</td>
+      <td>{{ product.category | uppercase }}</td>
+    </tr>
+  }
+</table>
+<br><br>
+
+
+<!-- <table>
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>Title</th>
+      <th>Price</th>
+      <th>Category</th>
+      <th>action</th>
+     
+    </tr>
+  </thead>
+  <tbody>
+    @for (data of products; track data.id) {
+      <tr>
+        <td>{{data.id}}</td>
+        <td>{{ data.title }}</td>
+        <td>{{ data.price }}</td>
+        <td>{{ data.category }}</td>
+         <td>
+          <button (click)="editProduct(data.id)">Edit</button>
+        </td>
+
+        <td>
+          <button (click)="deleteProduct(data.id)">Delete</button>
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>
+
+<h2>post method</h2>
+<table border="3">
+  <tr>
+    <th>id</th>
+    <th>Title</th>
+    <th>Price</th>
+  </tr>
+
+  @for (product of updates; track product.id) {
+    <tr>
+      <td>{{product.id}}</td>
+      <td>{{product.title}}</td>
+      <td>{{product.price}}</td>
+    </tr>
+  }
+</table>
+ <button (click)="getProduct()">error</button> -->
+<!-- <button (click)="addProduct()">Add Product</button> -->
+<!-- <button (click)="updateProduct()">Update Product</button> -->
+<!-- <button (click)="deleteProduct()">Delete Product</button> -->
+<!---<br>
  <h1>Template driven form</h1>
 <form #age="ngForm">
 
@@ -35,124 +150,143 @@
   <p>controls: {{ age.controls | json }}</p>
 </form>------>
 
+<hr />
+<h1>reactive form</h1>
 
-<hr>  <h1>reactive form</h1>
+<form [formGroup]="userForm">
+  <button (click)="patchData()">Patch Data</button>-
 
-<form [formGroup]="userForm" (ngSubmit)="submit()">
-
-<button (click)="patchData()">Patch Data</button>-
-
-<button (click)="setData()">Set Data</button><br><br>
-<div>
+  <button (click)="setData()">Set Data</button><br /><br />
+  <div>
     <label for="name">Name:</label>
-    <input name="name" type="text" formControlName="name">
-    @if(userForm.controls.name.errors && userForm.controls.name.dirty){
-    @if(userForm.controls.name.errors['required']){
-      <p>name is required</p>
+    <input name="name" type="text" formControlName="name" />
+    @if (userForm.controls.name.errors && userForm.controls.name.dirty) {
+      @if (userForm.controls.name.errors['required']) {
+        <p>name is required</p>
+      }
     }
-  } 
-    @if(userForm.controls.name.errors?.['noAdmin'] && userForm.controls.name.touched){
-    <p>admin is not allowed</p>
-  }
-  <br><br>
-  <label for="phone">Phone:</label>
-  <input name="phone" type="number" formControlName="phone">
-  @if(userForm.controls.phone.errors?.['required'] && userForm.controls.phone.touched){
-    <p>Phone number is required</p>
-  }
+    @if (userForm.controls.name.errors?.['noAdmin'] && userForm.controls.name.touched) {
+      <p>admin is not allowed</p>
+    }
+    <br /><br />
+    <label for="phone">Phone:</label>
+    <input name="phone" type="number" formControlName="phone" />
+    @if (userForm.controls.phone.errors?.['required'] && userForm.controls.phone.touched) {
+      <p>Phone number is required</p>
+    }
+    @if (userForm.controls.phone.errors?.['indianPhone'] && userForm.controls.phone.touched) {
+      <p>Enter a valid Indian phone number</p>
+    }
 
-  @if(userForm.controls.phone.errors?.['indianPhone'] && userForm.controls.phone.touched){
-    <p>Enter a valid Indian phone number</p>
-  }
+    <br /><br />
+    <label for="age">Age :</label>
+    <input name="age" type="number" formControlName="age" />
 
-  <br><br>
- <label for="age">Age :</label>
-  <input name="age" type="number" formControlName="age">
-  
-    @if(userForm.controls.age.errors && userForm.controls.age.dirty){
-    @if(userForm.controls.age.errors['required']){
-      <p>Age is required</p>
+    @if (userForm.controls.age.errors && userForm.controls.age.dirty) {
+      @if (userForm.controls.age.errors['required']) {
+        <p>Age is required</p>
+      }
+      @if (userForm.controls.age.errors['min']) {
+        <p>min age is 18</p>
+      }
+      @if (userForm.controls.age.errors['max']) {
+        <p>max age is 45</p>
+      }
     }
-    @if(userForm.controls.age.errors['min']){
-      <p>min age is 18</p>
-    }
-    @if(userForm.controls.age.errors['max']){
-      <p>max age is 45</p>
-    }
-  }
 
-    <br><br>
+    <br /><br />
     <label for="email">Email:</label>
-    <input name="email" type="email" formControlName="email"><br><br>
-    @if(userForm.controls.email.errors?.['required'] && userForm.controls.email.touched){
-    <p>Email is required</p>
-  }
-
-  @if(userForm.controls.email.errors?.['email'] && userForm.controls.email.touched){
-    <p>Enter valid email</p>
-  }
-
-  @if(userForm.controls.email.errors?.['gmailOnly'] && userForm.controls.email.touched){
-    <p>Only Gmail is allowed</p>
-  }
-  <div formGroupName="passwordGroup">
-  <label for="password">Password:</label>
-  <input name="password" type="password" formControlName="password"><br><br>
-    @if(userForm.controls.passwordGroup.controls.password.touched){
-      @if(userForm.controls.passwordGroup.controls.password.errors?.['required']){
-        <p>Password is required</p>
-      }
-
-      @if(userForm.controls.passwordGroup.controls.password.errors?.['specialChar']){
-        <p>Password must contain a special character</p>
-      }
+    <input name="email" type="email" formControlName="email" /><br /><br />
+    @if (userForm.controls.email.errors?.['required'] && userForm.controls.email.touched) {
+      <p>Email is required</p>
     }
 
-  <label for="cpnfirmPassword">Confirm Password:</label>
-  <input name="confirmpassword" type="password" formControlName="confirmPassword">
+    @if (userForm.controls.email.errors?.['email'] && userForm.controls.email.touched) {
+      <p>Enter valid email</p>
+    }
 
-  @if(userForm.controls.passwordGroup.controls.confirmPassword.touched){
-      @if(userForm.controls.passwordGroup.controls.confirmPassword.errors?.['required']){
-        <p>Confirm Password is required</p>
+    @if (userForm.controls.email.errors?.['gmailOnly'] && userForm.controls.email.touched) {
+      <p>Only Gmail is allowed</p>
+    }
+    <div formGroupName="passwordGroup">
+      <label for="password">Password:</label>
+      <input name="password" type="password" formControlName="password" /><br /><br />
+      @if (userForm.controls.passwordGroup.controls.password.touched) {
+        @if (userForm.controls.passwordGroup.controls.password.errors?.['required']) {
+          <p>Password is required</p>
+        }
+
+        @if (userForm.controls.passwordGroup.controls.password.errors?.['specialChar']) {
+          <p>Password must contain a special character</p>
+        }
       }
-    }
 
-    @if(
-      userForm.controls.passwordGroup.errors?.['passwordMismatch'] &&
-      userForm.controls.passwordGroup.controls.confirmPassword.touched){
-      <p>Password and Confirm Password must match</p>
-    }
+      <label for="cpnfirmPassword">Confirm Password:</label>
+      <input name="confirmpassword" type="password" formControlName="confirmPassword" />
+
+      @if (userForm.controls.passwordGroup.controls.confirmPassword.touched) {
+        @if (userForm.controls.passwordGroup.controls.confirmPassword.errors?.['required']) {
+          <p>Confirm Password is required</p>
+        }
+      }
+
+      @if (
+        userForm.controls.passwordGroup.errors?.['passwordMismatch'] &&
+        userForm.controls.passwordGroup.controls.confirmPassword.touched
+      ) {
+        <p>Password and Confirm Password must match</p>
+      }
+    </div>
+    <br />
+
+    <!-- Dynamic Skills -->
+    <div formArrayName="skills">
+      <label>Skills :</label>
+      @for (skill of skills.controls; track $index) {
+        <div>
+          <input type="text" [formControlName]="$index" />-
+          <button (click)="removeSkill($index)">Remove</button>
+        </div>
+
+        @if (skill.touched && skill.errors?.['required']) {
+          <p>Skill is required</p>
+        }
+      }
+
+
+      <button (click)="addSkill()">Add Skill</button>
+    </div>
   </div>
-</div><br>
-<button (click)="submit()">Submit</button>
+  <br />
+  <button (click)="submit()">Submit</button>
 
-<hr>
-<h3>Validations</h3>
+  <hr />
+  <h3>Validations</h3>
   <p>value: {{ userForm.value | json }}</p>
   <p>valid: {{ userForm.valid }}</p>
   <p>dirty: {{ userForm.dirty }}</p>
   <p>touched: {{ userForm.touched }}</p>
   <p>untouched: {{ userForm.untouched }}</p>
   <p>status: {{ userForm.status }}</p>
-  <p>enable: {{userForm.enabled }}</p>
-  <p>disabled: {{userForm.disabled }}</p>
-  <p>errors: {{userForm.errors | json }}</p>
-
+  <p>enable: {{ userForm.enabled }}</p>
+  <p>disabled: {{ userForm.disabled }}</p>
+  <p>errors: {{ userForm.errors | json }}</p>
 </form>
 
+<hr />
+<button (click)="divide(10, 2)">10 / 2</button>
+<button (click)="divide(10, 0)">10 / 0</button>
 
-<hr>
-
-
+<p>{{ message }}</p>
+<!--Show Form -->
 
 
 <app-inputs></app-inputs>
 <!-- <app-dashboard></app-dashboard> -->
-  <!-- <div class="menu">
+<!-- <div class="menu">
 <a routerLink="/lists">Todo List</a>
 <a routerLink="/counts">Todo Count</a>
 <a routerLink="/dashboard">Dashboard</a>
 </div> -->
 
-
-<router-outlet></router-outlet> 
+<router-outlet></router-outlet>
